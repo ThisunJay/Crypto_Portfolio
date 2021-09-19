@@ -3,9 +3,7 @@ const dotenv = require("dotenv");
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
-const { getGoogleAuthURL, getGoogleTokens } = require('./src/config/google-oauth');
-const { getCoinBaseAuthURL, getCoinBaseTokens, getCoinbaseWallet } = require('./src/config/coinbase-oauth');
-const { storeTokens, storeUserInforFromGoogle, storeUserInforFromCoinbase } = require('./src/config/util')
+
 dotenv.config();
 const app = express();
 

@@ -1,16 +1,23 @@
 const { getGoogleAuthURL, getGoogleTokens, UploadFile } = require('../config/google-oauth');
-const { getCoinBaseAuthURL, getCoinBaseTokens } = require('../config/coinbase-oauth');
+const { getCoinBaseAuthURL, getCoinBaseTokens, getCoinMarketDefault } = require('../config/coinbase-oauth');
 
 exports.defaultRoute = async (req, res) => {
-    res.send('dashboard');
+    res.render('dashboard');
 }
 
 exports.login = async (req, res) => {
     const urls = {
         google: getGoogleAuthURL(),
         coinbase: getCoinBaseAuthURL(),
-      }
-      res.send({ urls });
+    }
+    res.render('login', { urls });
+}
+
+exports.selectWallet = async (req, res) => {
+    const [err, results] = await getCoinMarketDefault();
+    let data = [];
+    if (!err) { data = results }
+    res.render('select-wallet', { data });
 }
 
 exports.googleAuth = async (req, res) => {
@@ -30,10 +37,10 @@ exports.coinbaseAuth = async (req, res) => {
     let method_data = { ...data }
     method_data.method = "coinbase"
     req = storeTokens(req, method_data)
-  
+
     const [userError, userData] = await storeUserInforFromCoinbase(req);
     console.log("TOKEN: ", req.session);
-  
+
     res.redirect('/')
 }
 
@@ -50,7 +57,7 @@ exports.coinbaseWallet = async (req, res) => {
 // }
 
 exports.logout = async (req, res) => {
-    req.session.destroy()       
+    req.session.destroy()
     res.redirect('/login')
 }
 

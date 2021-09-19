@@ -1,0 +1,78 @@
+body {
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+#auth {
+    height: 100vh;
+    overflow-x: hidden
+}
+
+.ddxd:hover {
+    color: white;
+}
+
+.ddxd2:hover {
+    color: rgba(0, 0, 0, 0.534);
+}
+
+.google {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.9rem;
+    border: 1.2px solid #607080a1;
+}
+
+.binance {
+    color: rgba(255, 255, 255, 0.76);
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.9rem;
+    background-color: #0c0e12e0;
+}
+
+.coinbase {
+    color: rgba(255, 255, 255, 0.938);
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.9rem;
+    background-color: #1453f3;
+}
+
+#auth #auth-right {
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background: linear-gradient(45deg, #1a317736, #040a1dce), url(https://pnpcoin.com/images/video/b.jpeg);
+    height: 100%
+}
+
+#auth #auth-left {
+    padding: 13rem 8rem
+}
+
+#auth #auth-left .auth-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem
+}
+
+#auth #auth-left .auth-subtitle {
+    color: #a8aebb;
+    font-size: 1rem;
+    line-height: 1.2rem
+}
+
+#auth #auth-left .auth-logo {
+    margin-bottom: 7rem
+}
+
+#auth #auth-left .auth-logo img {
+    height: 2rem
+}
+
+@media screen and (max-width:767px) {
+    #auth #auth-left {
+        padding: 5rem
+    }
+}

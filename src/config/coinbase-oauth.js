@@ -62,8 +62,27 @@ function getCoinbaseWallet(req) {
         });
 }
 
+function getCoinMarketDefault() {
+    const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
+    const params = {
+        cryptocurrency_type: "coins",
+        limit: "10",
+        CMC_PRO_API_KEY: "21dc2e18-3e7b-4d3f-83eb-5bea063644cc",
+    };
+
+    return axios.get(url, { params })
+        .then((res) => {
+            return [null, res.data.data]
+        })
+        .catch((error) => {
+            console.log(error)
+            return [error, null]
+        });
+}
+
 module.exports = {
     getCoinBaseAuthURL,
     getCoinBaseTokens,
-    getCoinbaseWallet
+    getCoinbaseWallet,
+    getCoinMarketDefault
 }

@@ -14,9 +14,10 @@ router.get('/auth/coinbase', importedController.coinbaseAuth);
 
 router.get('/coinbase-wallet', importedController.coinbaseWallet)
 
+router.get('/select-wallet', importedController.selectWallet)
+
 // router.get('/test', importedController.uploadTest)
 
 router.get('/logout', importedController.logout)
 
 module.exports = router;
-  
