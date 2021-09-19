@@ -4,14 +4,19 @@ const router = express.Router();
 //import controller
 const importedController = require('../controllers/controller');
 
-router.get('/', importedController.defaultRouteFunction);
+router.get('/', importedController.defaultRoute);
 
-router.get('/login', importedController.loginFunction);
+router.get('/login', importedController.login);
 
-router.get('/auth/google', importedController.googleAuthFunction);
+router.get('/auth/google', importedController.googleAuth);
 
-router.get('/auth/coinbase', importedController.coinbaseAuthFunction);
+router.get('/auth/coinbase', importedController.coinbaseAuth);
 
-router.get('/test', importedController.uploadTest)
+router.get('/coinbase-wallet', importedController.coinbaseWallet)
+
+// router.get('/test', importedController.uploadTest)
+
+router.get('/logout', importedController.logout)
 
 module.exports = router;
+  
