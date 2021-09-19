@@ -42,7 +42,7 @@ function getCoinBaseTokens(code) {
 }
 function getCoinbaseWallet(req) {
     const url = "https://api.coinbase.com/v2/accounts";
-    let auth_details = req.session.cookie;
+    let auth_details = req.session.user_session;
     console.log(auth_details);
 
     return axios.get(url, {
@@ -62,11 +62,11 @@ function getCoinbaseWallet(req) {
         });
 }
 
-function getCoinMarketDefault() {
+function getCoinMarketDefault(limit = 7) {
     const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
     const params = {
         cryptocurrency_type: "coins",
-        limit: "10",
+        limit,
         CMC_PRO_API_KEY: "21dc2e18-3e7b-4d3f-83eb-5bea063644cc",
     };
 

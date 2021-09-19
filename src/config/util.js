@@ -1,60 +1,64 @@
 const axios = require("axios");
-function storeTokens(req, data) {
 
-    const session_object = {
-        ...req.session.cookie,
-        user_info: null,
-        access_token: data.access_token ? data.access_token : null,
-        refresh_token: data.refresh_token ? data.refresh_token : null,
-        scope: data.scope ? data.scope : null,
-        is_athenticate: true,
-        method: data.method ? data.method : null
-    }
-
-    req.session.cookie = session_object;
-
-    return req;
-}
-function storeUserInforFromGoogle(req) {
-    let auth_details = req.session.cookie;
-    const url = `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${auth_details.access_token}`;
+function storeUserInforFromGoogle(req, res, data) {
+    const url = `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${data.access_token}`;
     return axios.get(url, {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         },
     })
-        .then((res) => {
-            const userData = res.data;
-            req.session.cookie.user_info = userData
-            return [null, res.data]
+        .then((result) => {
+            req.session.user_session = {
+                user_info: result.data,
+                access_token: data.access_token ? data.access_token : null,
+                refresh_token: data.refresh_token ? data.refresh_token : null,
+                scope: data.scope ? data.scope : null,
+                method: "GOOGLE",
+                api_key: null
+            }
+            req.session.save(function (err) {
+                if (err) {
+                    res.redirect('/login')
+                }
+                res.redirect('/')
+            })
         })
         .catch((error) => {
-            return [error, null]
+            res.redirect('/login')
         });
 }
 
-function storeUserInforFromCoinbase(req) {
-    let auth_details = req.session.cookie;
+function storeUserInforFromCoinbase(req, res, data) {
     const url = `https://api.coinbase.com/v2/user`;
     return axios.get(url, {
         headers: {
-            "Authorization": `Bearer ${auth_details.access_token}`,
+            "Authorization": `Bearer ${data.access_token}`,
             "Content-Type": "application/x-www-form-urlencoded",
         },
     })
-        .then((res) => {
-            // console.log("RES: ", res.data.data);
-            const userData = res.data.data;
-            req.session.cookie.user_info = userData
-            return [null, null]
+        .then((result) => {
+            req.session.user_session = {
+                user_info: result.data.data,
+                access_token: data.access_token ? data.access_token : null,
+                refresh_token: data.refresh_token ? data.refresh_token : null,
+                scope: data.scope ? data.scope : null,
+                is_athenticate: true,
+                method: "COINBASE",
+                api_key: null
+            }
+            req.session.save(function (err) {
+                if (err) {
+                    res.redirect('/login')
+                }
+                res.redirect('/')
+            })
         })
         .catch((error) => {
-            return [error, null]
+            res.redirect('/login')
         });
 }
 
 module.exports = {
-    storeTokens,
     storeUserInforFromGoogle,
     storeUserInforFromCoinbase
 }

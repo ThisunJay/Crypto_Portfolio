@@ -35,6 +35,11 @@
     font-weight: 700
 }
 
+[class*=" bi-"]::before {
+    line-height: 1 !important;
+    vertical-align: text-top !important;
+}
+
 .alert-success {
     background-color: #4fbe87;
     color: #fff

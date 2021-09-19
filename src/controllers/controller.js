@@ -1,8 +1,13 @@
 const { getGoogleAuthURL, getGoogleTokens, UploadFile } = require('../config/google-oauth');
 const { getCoinBaseAuthURL, getCoinBaseTokens, getCoinMarketDefault } = require('../config/coinbase-oauth');
+const { storeUserInforFromCoinbase, storeUserInforFromGoogle } = require('../config/util');
 
 exports.defaultRoute = async (req, res) => {
-    res.render('dashboard');
+    const [err, results] = await getCoinMarketDefault(5);
+    let data = [];
+    if (!err) { data = results }
+    console.log(req.session.user_session)
+    res.render('dashboard', { data });
 }
 
 exports.login = async (req, res) => {
@@ -23,25 +28,16 @@ exports.selectWallet = async (req, res) => {
 exports.googleAuth = async (req, res) => {
     const { code } = req.query;
     const [error, data] = await getGoogleTokens(code);
-    let is_error = false
-    let method_data = { ...data }
-    method_data.method = "google"
-    req = storeTokens(req, method_data)
-    const [userError, userData] = await storeUserInforFromGoogle(req);
-    res.redirect('/')
+    if (error) { res.redirect('/login') }
+    await storeUserInforFromGoogle(req, res, data);
 }
 
 exports.coinbaseAuth = async (req, res) => {
     const { code } = req.query;
     const [error, data] = await getCoinBaseTokens(code);
-    let method_data = { ...data }
-    method_data.method = "coinbase"
-    req = storeTokens(req, method_data)
+    if (error) { res.redirect('/login') }
+    await storeUserInforFromCoinbase(req, res, data);
 
-    const [userError, userData] = await storeUserInforFromCoinbase(req);
-    console.log("TOKEN: ", req.session);
-
-    res.redirect('/')
 }
 
 exports.coinbaseWallet = async (req, res) => {

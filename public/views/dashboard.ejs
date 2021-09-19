@@ -187,104 +187,48 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td class="col-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-md">
-                                                                        <img width="5"
-                                                                            src="https://cryptoicon-api.vercel.app/api/icon/btc">
+                                                        <% for(var i=0; i < data.length; i++) { %>
+                                                            <tr>
+                                                                <td class="col-3">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="avatar avatar-md">
+                                                                            <img width="5"
+                                                                                src="https://cryptoicon-api.vercel.app/api/icon/<%= data[i].symbol.toLowerCase() %>">
+                                                                        </div>
+                                                                        <p class="font-bold ms-3 mb-0">
+                                                                            <%= data[i].name %>
+                                                                        </p>
                                                                     </div>
-                                                                    <p class="font-bold ms-3 mb-0">BTC</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">$ 54,322.45</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0 text-success font-semibold">+ 345%</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">54,322.456</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">54,322.456</p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="col-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-md">
-                                                                        <img
-                                                                            src="https://cryptoicon-api.vercel.app/api/icon/bnb">
-                                                                    </div>
-                                                                    <p class="font-bold ms-3 mb-0">BNB
+                                                                </td>
+                                                                <td class="col-auto">
+                                                                    <p class=" mb-0">$ <%=
+                                                                            data[i].quote.USD.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","
+                                                                            ) %>
                                                                     </p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0 ">$ 234.45</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0 text-danger font-semibold">- 15%</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">100,000,034</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">100,000,034</p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="col-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-md">
-                                                                        <img width="5"
-                                                                            src="https://cryptoicon-api.vercel.app/api/icon/eth">
-                                                                    </div>
-                                                                    <p class="font-bold ms-3 mb-0">ETH</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">$ 54,322.45</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0 text-success font-semibold">+ 345%</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">54,322.456</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">54,322.456</p>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="col-3">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-md">
-                                                                        <img
-                                                                            src="https://cryptoicon-api.vercel.app/api/icon/bnb">
-                                                                    </div>
-                                                                    <p class="font-bold ms-3 mb-0">BNB
+                                                                </td>
+                                                                <td class="col-auto">
+                                                                    <p
+                                                                        class=" mb-0 text-<%= data[i].quote.USD.percent_change_24h < 0 ? 'danger' : 'success' %> font-semibold">
+                                                                        <%= data[i].quote.USD.percent_change_24h.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","
+                                                                            ) %>%
                                                                     </p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0 ">$ 234.45</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0 text-danger font-semibold">- 15%</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">100,000,034</p>
-                                                            </td>
-                                                            <td class="col-auto">
-                                                                <p class=" mb-0">100,000,034</p>
-                                                            </td>
+                                                                </td>
+                                                                <td class="col-auto">
+                                                                    <p class=" mb-0">
+                                                                        <%= data[i].quote.USD.market_cap.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","
+                                                                            ) %>
+                                                                    </p>
+                                                                </td>
+                                                                <td class="col-auto">
+                                                                    <p class=" mb-0">
+                                                                        <%= data[i].quote.USD.volume_24h.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","
+                                                                            ) %>
+                                                                    </p>
+                                                                </td>
 
-                                                        </tr>
+                                                            </tr>
+                                                            <% } %>
+
                                                     </tbody>
                                                 </table>
                                             </div>

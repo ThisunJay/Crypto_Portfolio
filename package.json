@@ -21,6 +21,7 @@
     "googleapis": "^87.0.0",
     "nodemon": "^2.0.12",
     "query-string": "^7.0.1",
-    "uniqid": "^5.4.0"
+    "uniqid": "^5.4.0",
+    "uuid": "^8.3.2"
   }
 }
