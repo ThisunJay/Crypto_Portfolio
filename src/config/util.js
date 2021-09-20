@@ -8,8 +8,13 @@ function storeUserInforFromGoogle(req, res, data) {
         },
     })
         .then((result) => {
+            const user = result.data;
             req.session.user_session = {
-                user_info: result.data,
+                user_info: {
+                    name: user.name,
+                    email: user.email,
+                    image: user.picture
+                },
                 access_token: data.access_token ? data.access_token : null,
                 refresh_token: data.refresh_token ? data.refresh_token : null,
                 scope: data.scope ? data.scope : null,
@@ -20,7 +25,7 @@ function storeUserInforFromGoogle(req, res, data) {
                 if (err) {
                     res.redirect('/login')
                 }
-                res.redirect('/')
+                res.redirect('/select-wallet')
             })
         })
         .catch((error) => {
@@ -37,8 +42,13 @@ function storeUserInforFromCoinbase(req, res, data) {
         },
     })
         .then((result) => {
+            const user = result.data.data
             req.session.user_session = {
-                user_info: result.data.data,
+                user_info: {
+                    name: user.name,
+                    email: "",
+                    image: user.avatar_url
+                },
                 access_token: data.access_token ? data.access_token : null,
                 refresh_token: data.refresh_token ? data.refresh_token : null,
                 scope: data.scope ? data.scope : null,
@@ -50,7 +60,7 @@ function storeUserInforFromCoinbase(req, res, data) {
                 if (err) {
                     res.redirect('/login')
                 }
-                res.redirect('/')
+                res.redirect('/dashboard')
             })
         })
         .catch((error) => {
@@ -58,8 +68,37 @@ function storeUserInforFromCoinbase(req, res, data) {
         });
 }
 
+function getCoinMarketDefault(limit = 7) {
+    const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
+    const params = {
+        cryptocurrency_type: "coins",
+        limit,
+        CMC_PRO_API_KEY: "21dc2e18-3e7b-4d3f-83eb-5bea063644cc",
+    };
+
+    return axios.get(url, { params })
+        .then((res) => {
+            return [null, res.data.data]
+        })
+        .catch((error) => {
+            console.log(error)
+            return [error, null]
+        });
+}
+
+function setupLocalValues(req, res, next) {
+    let info = req.session?.user_session?.user_info;
+    res.locals.values = {
+        query: req.query,
+        user_info: info ? info : null
+    }
+    next();
+}
+
 module.exports = {
     storeUserInforFromGoogle,
-    storeUserInforFromCoinbase
+    storeUserInforFromCoinbase,
+    getCoinMarketDefault,
+    setupLocalValues
 }
 

@@ -40,49 +40,9 @@ function getCoinBaseTokens(code) {
             return [error, null]
         });
 }
-function getCoinbaseWallet(req) {
-    const url = "https://api.coinbase.com/v2/accounts";
-    let auth_details = req.session.user_session;
-    console.log(auth_details);
 
-    return axios.get(url, {
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": `Bearer ${auth_details.access_token}`
-        },
-    })
-        .then((res) => {
-            let walletDetails = red.data
-            return [null, walletDetails]
-        })
-        .catch((error) => {
-            // console.log(error)
-            let walletError = error
-            return [walletError, null]
-        });
-}
-
-function getCoinMarketDefault(limit = 7) {
-    const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
-    const params = {
-        cryptocurrency_type: "coins",
-        limit,
-        CMC_PRO_API_KEY: "21dc2e18-3e7b-4d3f-83eb-5bea063644cc",
-    };
-
-    return axios.get(url, { params })
-        .then((res) => {
-            return [null, res.data.data]
-        })
-        .catch((error) => {
-            console.log(error)
-            return [error, null]
-        });
-}
 
 module.exports = {
     getCoinBaseAuthURL,
     getCoinBaseTokens,
-    getCoinbaseWallet,
-    getCoinMarketDefault
 }
