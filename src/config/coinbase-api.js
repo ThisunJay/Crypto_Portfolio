@@ -14,7 +14,7 @@ function getCoinbaseWalletFromOauth(req) {
         },
     })
         .then((res) => {
-            return [null, res.data]
+            return [null, formatDataset(res.data)];
         })
         .catch((error) => {
             console.log(error)
@@ -26,11 +26,25 @@ function getCoinbaseWalletFromOauth(req) {
 async function getCoinbaseWalletFromAPI(apiKey, secret) {
     try {
         let coinbase = new ccxt.coinbase({ apiKey, secret })
-        const balance = await coinbase.fetchBalance();
-        return [null, balance];
+        const results = await coinbase.fetchBalance();
+        return [null, formatDataset(results)];
     } catch (err) {
         return [err, null]
     }
+}
+
+function formatDataset(results) {
+    let coins = results.free;
+    let dataset = [];
+    for (const key in coins) {
+        if (coins[key] > 0) {
+            dataset.push({
+                value: Number(coins[key]),
+                symbol: key
+            })
+        }
+    }
+    return dataset;
 }
 
 
