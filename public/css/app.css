@@ -1841,3 +1841,16 @@ a {
 .icon-mid:before {
     vertical-align: middle
 }
+
+.swal2-popup {
+    width: 70% !important;
+    width: 55% !important;
+    height: 70% !important;
+    height: 85% !important;
+}
+
+.ddxg2 {
+    float: left;
+    font-size: 13px;
+    padding-left: 80px;
+}
