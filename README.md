@@ -1,4 +1,5 @@
 # Crypto Portfolio
+<img src="https://github.com/ThisunJay/Crypto_Portfolio/blob/main/screenshots/dashboard.png?raw=true" width="850" >
 
 As the world moved away from the more traditional ways of trading from the past ages, currently the
 same shift has been happening in the industry in the name of cryptocurrency. Cryptocurrency has been
